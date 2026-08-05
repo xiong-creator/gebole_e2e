@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560"><rect width="1200" height="560" fill="white"/><rect x="20" y="20" width="380" height="520" fill="#F8F9FB" rx="12"/>
+<text x="38" y="44" font-size="18" fill="#1F2937" font-weight="bold">short Speed Distribution</text>
+<line x1="78" y1="56.0" x2="380" y2="56.0" stroke="#D9DDE7" stroke-width="1"/>
+<text x="70" y="60.0" font-size="11" fill="#1F2937" text-anchor="end">227</text>
+<line x1="78" y1="166.5" x2="380" y2="166.5" stroke="#D9DDE7" stroke-width="1"/>
+<text x="70" y="170.5" font-size="11" fill="#1F2937" text-anchor="end">170</text>
+<line x1="78" y1="277.0" x2="380" y2="277.0" stroke="#D9DDE7" stroke-width="1"/>
+<text x="70" y="281.0" font-size="11" fill="#1F2937" text-anchor="end">114</text>
+<line x1="78" y1="387.5" x2="380" y2="387.5" stroke="#D9DDE7" stroke-width="1"/>
+<text x="70" y="391.5" font-size="11" fill="#1F2937" text-anchor="end">57</text>
+<line x1="78" y1="498.0" x2="380" y2="498.0" stroke="#D9DDE7" stroke-width="1"/>
+<text x="70" y="502.0" font-size="11" fill="#1F2937" text-anchor="end">0</text>
+<rect x="78.00" y="369.49" width="9.07" height="128.51" fill="#4C78A8" opacity="0.85"/>
+<rect x="88.07" y="425.96" width="9.07" height="72.04" fill="#4C78A8" opacity="0.85"/>
+<rect x="98.13" y="396.75" width="9.07" height="101.25" fill="#4C78A8" opacity="0.85"/>
+<rect x="108.20" y="492.16" width="9.07" height="5.84" fill="#4C78A8" opacity="0.85"/>
+<rect x="118.27" y="474.63" width="9.07" height="23.37" fill="#4C78A8" opacity="0.85"/>
+<rect x="128.33" y="476.58" width="9.07" height="21.42" fill="#4C78A8" opacity="0.85"/>
+<rect x="138.40" y="494.11" width="9.07" height="3.89" fill="#4C78A8" opacity="0.85"/>
+<rect x="148.47" y="484.37" width="9.07" height="13.63" fill="#4C78A8" opacity="0.85"/>
+<rect x="158.53" y="478.53" width="9.07" height="19.47" fill="#4C78A8" opacity="0.85"/>
+<rect x="168.60" y="488.26" width="9.07" height="9.74" fill="#4C78A8" opacity="0.85"/>
+<rect x="178.67" y="490.21" width="9.07" height="7.79" fill="#4C78A8" opacity="0.85"/>
+<rect x="188.73" y="490.21" width="9.07" height="7.79" fill="#4C78A8" opacity="0.85"/>
+<rect x="198.80" y="482.42" width="9.07" height="15.58" fill="#4C78A8" opacity="0.85"/>
+<rect x="208.87" y="470.74" width="9.07" height="27.26" fill="#4C78A8" opacity="0.85"/>
+<rect x="218.93" y="56.00" width="9.07" height="442.00" fill="#4C78A8" opacity="0.85"/>
+<rect x="229.00" y="408.43" width="9.07" height="89.57" fill="#4C78A8" opacity="0.85"/>
+<rect x="239.07" y="449.32" width="9.07" height="48.68" fill="#4C78A8" opacity="0.85"/>
+<rect x="249.13" y="387.01" width="9.07" height="110.99" fill="#4C78A8" opacity="0.85"/>
+<rect x="259.20" y="451.27" width="9.07" height="46.73" fill="#4C78A8" opacity="0.85"/>
+<rect x="269.27" y="392.85" width="9.07" height="105.15" fill="#4C78A8" opacity="0.85"/>
+<rect x="279.33" y="437.64" width="9.07" height="60.36" fill="#4C78A8" opacity="0.85"/>
+<rect x="289.40" y="449.32" width="9.07" height="48.68" fill="#4C78A8" opacity="0.85"/>
+<rect x="299.47" y="492.16" width="9.07" height="5.84" fill="#4C78A8" opacity="0.85"/>
+<rect x="309.53" y="494.11" width="9.07" height="3.89" fill="#4C78A8" opacity="0.85"/>
+<rect x="319.60" y="494.11" width="9.07" height="3.89" fill="#4C78A8" opacity="0.85"/>
+<rect x="329.67" y="498.00" width="9.07" height="0.00" fill="#4C78A8" opacity="0.85"/>
+<rect x="339.73" y="494.11" width="9.07" height="3.89" fill="#4C78A8" opacity="0.85"/>
+<rect x="349.80" y="496.05" width="9.07" height="1.95" fill="#4C78A8" opacity="0.85"/>
+<rect x="359.87" y="498.00" width="9.07" height="0.00" fill="#4C78A8" opacity="0.85"/>
+<rect x="369.93" y="494.11" width="9.07" height="3.89" fill="#4C78A8" opacity="0.85"/>
+<line x1="78" y1="498" x2="380" y2="498" stroke="#1F2937" stroke-width="1.2"/>
+<line x1="78" y1="56" x2="78" y2="498" stroke="#1F2937" stroke-width="1.2"/>
+<text x="78" y="516" font-size="11" fill="#1F2937" text-anchor="start">1.5</text>
+<text x="380" y="516" font-size="11" fill="#1F2937" text-anchor="end">1546.5</text>
+<text x="229.0" y="532" font-size="12" fill="#1F2937" text-anchor="middle">Speed (m/min)</text>
+<text x="34" y="46" font-size="12" fill="#1F2937">Count</text>
+<rect x="38" y="512" width="12" height="12" fill="#4C78A8" rx="2"/>
+<text x="56" y="522" font-size="11" fill="#1F2937">short n=736</text>
+<rect x="410" y="20" width="380" height="520" fill="#F8F9FB" rx="12"/>
+<text x="428" y="44" font-size="18" fill="#1F2937" font-weight="bold">middle Speed Distribution</text>
+<line x1="468" y1="56.0" x2="770" y2="56.0" stroke="#D9DDE7" stroke-width="1"/>
+<text x="460" y="60.0" font-size="11" fill="#1F2937" text-anchor="end">1720</text>
+<line x1="468" y1="166.5" x2="770" y2="166.5" stroke="#D9DDE7" stroke-width="1"/>
+<text x="460" y="170.5" font-size="11" fill="#1F2937" text-anchor="end">1290</text>
+<line x1="468" y1="277.0" x2="770" y2="277.0" stroke="#D9DDE7" stroke-width="1"/>
+<text x="460" y="281.0" font-size="11" fill="#1F2937" text-anchor="end">860</text>
+<line x1="468" y1="387.5" x2="770" y2="387.5" stroke="#D9DDE7" stroke-width="1"/>
+<text x="460" y="391.5" font-size="11" fill="#1F2937" text-anchor="end">430</text>
+<line x1="468" y1="498.0" x2="770" y2="498.0" stroke="#D9DDE7" stroke-width="1"/>
+<text x="460" y="502.0" font-size="11" fill="#1F2937" text-anchor="end">0</text>
+<rect x="468.00" y="497.23" width="9.07" height="0.77" fill="#F58518" opacity="0.85"/>
+<rect x="478.07" y="494.40" width="9.07" height="3.60" fill="#F58518" opacity="0.85"/>
+<rect x="488.13" y="349.47" width="9.07" height="148.53" fill="#F58518" opacity="0.85"/>
+<rect x="498.20" y="316.32" width="9.07" height="181.68" fill="#F58518" opacity="0.85"/>
+<rect x="508.27" y="325.05" width="9.07" height="172.95" fill="#F58518" opacity="0.85"/>
+<rect x="518.33" y="236.40" width="9.07" height="261.60" fill="#F58518" opacity="0.85"/>
+<rect x="528.40" y="272.63" width="9.07" height="225.37" fill="#F58518" opacity="0.85"/>
+<rect x="538.47" y="294.73" width="9.07" height="203.27" fill="#F58518" opacity="0.85"/>
+<rect x="548.53" y="56.00" width="9.07" height="442.00" fill="#F58518" opacity="0.85"/>
+<rect x="558.60" y="383.39" width="9.07" height="114.61" fill="#F58518" opacity="0.85"/>
+<rect x="568.67" y="206.33" width="9.07" height="291.67" fill="#F58518" opacity="0.85"/>
+<rect x="578.73" y="328.65" width="9.07" height="169.35" fill="#F58518" opacity="0.85"/>
+<rect x="588.80" y="459.45" width="9.07" height="38.55" fill="#F58518" opacity="0.85"/>
+<rect x="598.87" y="497.74" width="9.07" height="0.26" fill="#F58518" opacity="0.85"/>
+<rect x="608.93" y="498.00" width="9.07" height="0.00" fill="#F58518" opacity="0.85"/>
+<rect x="619.00" y="498.00" width="9.07" height="0.00" fill="#F58518" opacity="0.85"/>
+<rect x="629.07" y="498.00" width="9.07" height="0.00" fill="#F58518" opacity="0.85"/>
+<rect x="639.13" y="498.00" width="9.07" height="0.00" fill="#F58518" opacity="0.85"/>
+<rect x="649.20" y="498.00" width="9.07" height="0.00" fill="#F58518" opacity="0.85"/>
+<rect x="659.27" y="497.49" width="9.07" height="0.51" fill="#F58518" opacity="0.85"/>
+<rect x="669.33" y="498.00" width="9.07" height="0.00" fill="#F58518" opacity="0.85"/>
+<rect x="679.40" y="498.00" width="9.07" height="0.00" fill="#F58518" opacity="0.85"/>
+<rect x="689.47" y="498.00" width="9.07" height="0.00" fill="#F58518" opacity="0.85"/>
+<rect x="699.53" y="497.49" width="9.07" height="0.51" fill="#F58518" opacity="0.85"/>
+<rect x="709.60" y="498.00" width="9.07" height="0.00" fill="#F58518" opacity="0.85"/>
+<rect x="719.67" y="497.74" width="9.07" height="0.26" fill="#F58518" opacity="0.85"/>
+<rect x="729.73" y="498.00" width="9.07" height="0.00" fill="#F58518" opacity="0.85"/>
+<rect x="739.80" y="498.00" width="9.07" height="0.00" fill="#F58518" opacity="0.85"/>
+<rect x="749.87" y="498.00" width="9.07" height="0.00" fill="#F58518" opacity="0.85"/>
+<rect x="759.93" y="497.74" width="9.07" height="0.26" fill="#F58518" opacity="0.85"/>
+<line x1="468" y1="498" x2="770" y2="498" stroke="#1F2937" stroke-width="1.2"/>
+<line x1="468" y1="56" x2="468" y2="498" stroke="#1F2937" stroke-width="1.2"/>
+<text x="468" y="516" font-size="11" fill="#1F2937" text-anchor="start">300.5</text>
+<text x="770" y="516" font-size="11" fill="#1F2937" text-anchor="end">3879.1</text>
+<text x="619.0" y="532" font-size="12" fill="#1F2937" text-anchor="middle">Speed (m/min)</text>
+<text x="424" y="46" font-size="12" fill="#1F2937">Count</text>
+<rect x="428" y="512" width="12" height="12" fill="#F58518" rx="2"/>
+<text x="446" y="522" font-size="11" fill="#1F2937">middle n=8778</text>
+<rect x="800" y="20" width="380" height="520" fill="#F8F9FB" rx="12"/>
+<text x="818" y="44" font-size="18" fill="#1F2937" font-weight="bold">long Speed Distribution</text>
+<line x1="858" y1="56.0" x2="1160" y2="56.0" stroke="#D9DDE7" stroke-width="1"/>
+<text x="850" y="60.0" font-size="11" fill="#1F2937" text-anchor="end">2109</text>
+<line x1="858" y1="166.5" x2="1160" y2="166.5" stroke="#D9DDE7" stroke-width="1"/>
+<text x="850" y="170.5" font-size="11" fill="#1F2937" text-anchor="end">1582</text>
+<line x1="858" y1="277.0" x2="1160" y2="277.0" stroke="#D9DDE7" stroke-width="1"/>
+<text x="850" y="281.0" font-size="11" fill="#1F2937" text-anchor="end">1054</text>
+<line x1="858" y1="387.5" x2="1160" y2="387.5" stroke="#D9DDE7" stroke-width="1"/>
+<text x="850" y="391.5" font-size="11" fill="#1F2937" text-anchor="end">527</text>
+<line x1="858" y1="498.0" x2="1160" y2="498.0" stroke="#D9DDE7" stroke-width="1"/>
+<text x="850" y="502.0" font-size="11" fill="#1F2937" text-anchor="end">0</text>
+<rect x="858.00" y="497.58" width="9.07" height="0.42" fill="#54A24B" opacity="0.85"/>
+<rect x="868.07" y="494.86" width="9.07" height="3.14" fill="#54A24B" opacity="0.85"/>
+<rect x="878.13" y="490.66" width="9.07" height="7.34" fill="#54A24B" opacity="0.85"/>
+<rect x="888.20" y="449.59" width="9.07" height="48.41" fill="#54A24B" opacity="0.85"/>
+<rect x="898.27" y="411.65" width="9.07" height="86.35" fill="#54A24B" opacity="0.85"/>
+<rect x="908.33" y="440.37" width="9.07" height="57.63" fill="#54A24B" opacity="0.85"/>
+<rect x="918.40" y="458.18" width="9.07" height="39.82" fill="#54A24B" opacity="0.85"/>
+<rect x="928.47" y="429.05" width="9.07" height="68.95" fill="#54A24B" opacity="0.85"/>
+<rect x="938.53" y="448.33" width="9.07" height="49.67" fill="#54A24B" opacity="0.85"/>
+<rect x="948.60" y="294.08" width="9.07" height="203.92" fill="#54A24B" opacity="0.85"/>
+<rect x="958.67" y="253.42" width="9.07" height="244.58" fill="#54A24B" opacity="0.85"/>
+<rect x="968.73" y="425.91" width="9.07" height="72.09" fill="#54A24B" opacity="0.85"/>
+<rect x="978.80" y="56.00" width="9.07" height="442.00" fill="#54A24B" opacity="0.85"/>
+<rect x="988.87" y="60.61" width="9.07" height="437.39" fill="#54A24B" opacity="0.85"/>
+<rect x="998.93" y="349.20" width="9.07" height="148.80" fill="#54A24B" opacity="0.85"/>
+<rect x="1009.00" y="446.44" width="9.07" height="51.56" fill="#54A24B" opacity="0.85"/>
+<rect x="1019.07" y="464.05" width="9.07" height="33.95" fill="#54A24B" opacity="0.85"/>
+<rect x="1029.13" y="403.69" width="9.07" height="94.31" fill="#54A24B" opacity="0.85"/>
+<rect x="1039.20" y="275.43" width="9.07" height="222.57" fill="#54A24B" opacity="0.85"/>
+<rect x="1049.27" y="446.23" width="9.07" height="51.77" fill="#54A24B" opacity="0.85"/>
+<rect x="1059.33" y="485.01" width="9.07" height="12.99" fill="#54A24B" opacity="0.85"/>
+<rect x="1069.40" y="498.00" width="9.07" height="0.00" fill="#54A24B" opacity="0.85"/>
+<rect x="1079.47" y="498.00" width="9.07" height="0.00" fill="#54A24B" opacity="0.85"/>
+<rect x="1089.53" y="498.00" width="9.07" height="0.00" fill="#54A24B" opacity="0.85"/>
+<rect x="1099.60" y="498.00" width="9.07" height="0.00" fill="#54A24B" opacity="0.85"/>
+<rect x="1109.67" y="498.00" width="9.07" height="0.00" fill="#54A24B" opacity="0.85"/>
+<rect x="1119.73" y="498.00" width="9.07" height="0.00" fill="#54A24B" opacity="0.85"/>
+<rect x="1129.80" y="498.00" width="9.07" height="0.00" fill="#54A24B" opacity="0.85"/>
+<rect x="1139.87" y="498.00" width="9.07" height="0.00" fill="#54A24B" opacity="0.85"/>
+<rect x="1149.93" y="497.79" width="9.07" height="0.21" fill="#54A24B" opacity="0.85"/>
+<line x1="858" y1="498" x2="1160" y2="498" stroke="#1F2937" stroke-width="1.2"/>
+<line x1="858" y1="56" x2="858" y2="498" stroke="#1F2937" stroke-width="1.2"/>
+<text x="858" y="516" font-size="11" fill="#1F2937" text-anchor="start">183.5</text>
+<text x="1160" y="516" font-size="11" fill="#1F2937" text-anchor="end">2462.4</text>
+<text x="1009.0" y="532" font-size="12" fill="#1F2937" text-anchor="middle">Speed (m/min)</text>
+<text x="814" y="46" font-size="12" fill="#1F2937">Count</text>
+<rect x="818" y="512" width="12" height="12" fill="#54A24B" rx="2"/>
+<text x="836" y="522" font-size="11" fill="#1F2937">long n=11346</text></svg>

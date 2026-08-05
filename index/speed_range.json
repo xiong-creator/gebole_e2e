@@ -1,0 +1,32 @@
+{
+  "short": {
+    "low": 1.4571,
+    "high": 1546.4905,
+    "count": 658,
+    "median": 742.373,
+    "low_quantile": 5.139,
+    "high_quantile": 1153.2388,
+    "observed_positive_min": 1.4571,
+    "observed_max": 1546.4905
+  },
+  "middle": {
+    "low": 539.5429,
+    "high": 3879.1267,
+    "count": 7900,
+    "median": 1232.2377,
+    "low_quantile": 559.5429,
+    "high_quantile": 1768.0943,
+    "observed_positive_min": 300.484,
+    "observed_max": 3879.1267
+  },
+  "long": {
+    "low": 408.1978,
+    "high": 2462.3511,
+    "count": 10216,
+    "median": 1154.5646,
+    "low_quantile": 428.1978,
+    "high_quantile": 1692.1707,
+    "observed_positive_min": 218.8546,
+    "observed_max": 2462.3511
+  }
+}
