@@ -4,6 +4,11 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from statistics import mean, median
 
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+
 from config import DISTANCE_BOUNDARIES, DISTANCE_BUCKETS, INDEX_DIR
 
 
@@ -14,9 +19,6 @@ BUCKET_COLORS = {
     "middle": "#F58518",
     "long": "#54A24B",
 }
-PANEL_BG = "#F8F9FB"
-GRID = "#D9DDE7"
-TEXT = "#1F2937"
 
 
 def quantile(sorted_values, q):
@@ -61,22 +63,6 @@ def describe(values):
     }
 
 
-def histogram(values, bins):
-    lo = min(values)
-    hi = max(values)
-    if hi <= lo:
-        hi = lo + 1.0
-    width = (hi - lo) / bins
-    counts = [0 for _ in range(bins)]
-    for value in values:
-        idx = int((value - lo) / width)
-        if idx == bins:
-            idx -= 1
-        counts[idx] += 1
-    edges = [lo + i * width for i in range(bins + 1)]
-    return counts, edges
-
-
 def build_summary(records, split_counts):
     distances = [r["distance_km"] for r in records]
     speeds = [r["speed_mpm"] for r in records]
@@ -105,138 +91,93 @@ def build_summary(records, split_counts):
     return summary
 
 
-def svg_hist_panel(title, xlabel, values, color, bins, panel_x, panel_y, panel_w, panel_h,
-                   extra_lines=None, legend_items=None):
-    extra_lines = extra_lines or []
-    legend_items = legend_items or []
-    chart_margin_left = 58
-    chart_margin_right = 20
-    chart_margin_top = 36
-    chart_margin_bottom = 42
-    chart_x = panel_x + chart_margin_left
-    chart_y = panel_y + chart_margin_top
-    chart_w = panel_w - chart_margin_left - chart_margin_right
-    chart_h = panel_h - chart_margin_top - chart_margin_bottom
-    counts, edges = histogram(values, bins)
-    max_count = max(counts) if counts else 1
-
-    parts = [
-        f'<rect x="{panel_x}" y="{panel_y}" width="{panel_w}" height="{panel_h}" fill="{PANEL_BG}" rx="12"/>',
-        f'<text x="{panel_x + 18}" y="{panel_y + 24}" font-size="18" fill="{TEXT}" font-weight="bold">{title}</text>',
-    ]
-    for i in range(5):
-        y = chart_y + chart_h * i / 4
-        parts.append(
-            f'<line x1="{chart_x}" y1="{y:.1f}" x2="{chart_x + chart_w}" y2="{y:.1f}" stroke="{GRID}" stroke-width="1"/>'
-        )
-        tick_value = int(round(max_count * (4 - i) / 4))
-        parts.append(
-            f'<text x="{chart_x - 8}" y="{y + 4:.1f}" font-size="11" fill="{TEXT}" text-anchor="end">{tick_value}</text>'
-        )
-
-    bar_w = chart_w / max(1, len(counts))
-    for i, count in enumerate(counts):
-        bar_h = 0 if max_count == 0 else chart_h * count / max_count
-        x = chart_x + i * bar_w
-        y = chart_y + chart_h - bar_h
-        parts.append(
-            f'<rect x="{x:.2f}" y="{y:.2f}" width="{max(bar_w - 1, 1):.2f}" height="{bar_h:.2f}" fill="{color}" opacity="0.85"/>'
-        )
-
-    value_min = edges[0]
-    value_max = edges[-1]
-    for line_value, line_color, line_label in extra_lines:
-        ratio = 0.0 if value_max <= value_min else (line_value - value_min) / (value_max - value_min)
-        x = chart_x + min(max(ratio, 0.0), 1.0) * chart_w
-        parts.append(
-            f'<line x1="{x:.2f}" y1="{chart_y}" x2="{x:.2f}" y2="{chart_y + chart_h}" '
-            f'stroke="{line_color}" stroke-width="2" stroke-dasharray="6,4"/>'
-        )
-        parts.append(
-            f'<text x="{x + 4:.2f}" y="{chart_y + 14}" font-size="11" fill="{line_color}">{line_label}</text>'
-        )
-
-    parts.extend(
-        [
-            f'<line x1="{chart_x}" y1="{chart_y + chart_h}" x2="{chart_x + chart_w}" y2="{chart_y + chart_h}" stroke="{TEXT}" stroke-width="1.2"/>',
-            f'<line x1="{chart_x}" y1="{chart_y}" x2="{chart_x}" y2="{chart_y + chart_h}" stroke="{TEXT}" stroke-width="1.2"/>',
-            f'<text x="{chart_x}" y="{chart_y + chart_h + 18}" font-size="11" fill="{TEXT}" text-anchor="start">{value_min:.1f}</text>',
-            f'<text x="{chart_x + chart_w}" y="{chart_y + chart_h + 18}" font-size="11" fill="{TEXT}" text-anchor="end">{value_max:.1f}</text>',
-            f'<text x="{chart_x + chart_w / 2}" y="{panel_y + panel_h - 8}" font-size="12" fill="{TEXT}" text-anchor="middle">{xlabel}</text>',
-            f'<text x="{panel_x + 14}" y="{chart_y - 10}" font-size="12" fill="{TEXT}">Count</text>',
-        ]
-    )
-
-    legend_x = panel_x + 18
-    legend_y = panel_y + panel_h - 18
-    for idx, (label, item_color) in enumerate(legend_items):
-        dx = idx * 115
-        parts.append(
-            f'<rect x="{legend_x + dx}" y="{legend_y - 10}" width="12" height="12" fill="{item_color}" rx="2"/>'
-        )
-        parts.append(
-            f'<text x="{legend_x + dx + 18}" y="{legend_y}" font-size="11" fill="{TEXT}">{label}</text>'
-        )
-    return "\n".join(parts)
-
-
-def write_svg(path, width, height, content):
-    svg = (
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">'
-        f'<rect width="{width}" height="{height}" fill="white"/>'
-        f"{content}</svg>"
-    )
-    path.write_text(svg, encoding="utf-8")
+def add_bucket_lines(ax):
+    for boundary in DISTANCE_BOUNDARIES:
+        ax.axvline(boundary, color="#D62728", linestyle="--", linewidth=1.5, alpha=0.9)
 
 
 def plot_distance_distribution(records):
     distances = [r["distance_km"] for r in records]
-    content = svg_hist_panel(
-        title="Distance Distribution",
-        xlabel="Distance (km)",
-        values=distances,
-        color="#7F7F7F",
-        bins=60,
-        panel_x=20,
-        panel_y=20,
-        panel_w=1160,
-        panel_h=520,
-        extra_lines=[
-            (DISTANCE_BOUNDARIES[0], "#D62728", f"b1={DISTANCE_BOUNDARIES[0]:.0f}"),
-            (DISTANCE_BOUNDARIES[1], "#D62728", f"b2={DISTANCE_BOUNDARIES[1]:.0f}"),
-        ],
-        legend_items=[("all records", "#7F7F7F")],
-    )
-    out_path = OUTPUT_DIR / "distance_distribution.svg"
-    write_svg(out_path, 1200, 560, content)
+    distances_sorted = sorted(distances)
+    distance_p99 = quantile(distances_sorted, 0.99)
+    clipped = [v for v in distances if v <= distance_p99]
+    short_focus = [v for v in distances if v <= 80]
+    main_focus = [v for v in distances if v <= 600]
+    middle_long_focus = [v for v in distances if 300 <= v <= 560]
+    bucket_counts = Counter(r["bucket_name"] for r in records)
+
+    fig, axes = plt.subplots(2, 2, figsize=(16, 10), dpi=180)
+    ax_full, ax_main, ax_short, ax_bucket = axes.flatten()
+
+    ax_full.hist(clipped, bins=80, color="#7F7F7F", edgecolor="white")
+    add_bucket_lines(ax_full)
+    ax_full.set_title(f"Main Range Distance (<= P99: {distance_p99:.1f} km)")
+    ax_full.set_xlabel("Distance (km)")
+    ax_full.set_ylabel("Count")
+    ax_full.grid(alpha=0.2, linestyle="--")
+
+    ax_main.hist(main_focus, bins=80, color="#4C78A8", edgecolor="white")
+    add_bucket_lines(ax_main)
+    ax_main.set_xlim(0, 600)
+    ax_main.set_title("Zoomed Distance (0-600 km)")
+    ax_main.set_xlabel("Distance (km)")
+    ax_main.set_ylabel("Count")
+    ax_main.grid(alpha=0.2, linestyle="--")
+
+    ax_short.hist(short_focus, bins=40, color="#F58518", edgecolor="white")
+    ax_short.set_xlim(0, 80)
+    ax_short.set_title("Short-Race Focus (0-80 km)")
+    ax_short.set_xlabel("Distance (km)")
+    ax_short.set_ylabel("Count")
+    ax_short.grid(alpha=0.2, linestyle="--")
+
+    bucket_names = DISTANCE_BUCKETS
+    bucket_values = [bucket_counts[name] for name in bucket_names]
+    ax_bucket.bar(bucket_names, bucket_values, color=[BUCKET_COLORS[name] for name in bucket_names])
+    ax_bucket.set_title("Bucket Counts")
+    ax_bucket.set_xlabel("Bucket")
+    ax_bucket.set_ylabel("Count")
+    ax_bucket.grid(axis="y", alpha=0.2, linestyle="--")
+    for idx, value in enumerate(bucket_values):
+        ax_bucket.text(idx, value, str(value), ha="center", va="bottom", fontsize=10)
+
+    inset = ax_main.inset_axes([0.55, 0.45, 0.4, 0.45])
+    inset.hist(middle_long_focus, bins=60, color="#54A24B", edgecolor="white")
+    inset.set_xlim(300, 560)
+    inset.set_title("300-560 km", fontsize=10)
+    inset.tick_params(labelsize=8)
+    inset.grid(alpha=0.15, linestyle="--")
+
+    fig.tight_layout()
+    out_path = OUTPUT_DIR / "distance_distribution.png"
+    fig.savefig(out_path, bbox_inches="tight")
+    plt.close(fig)
     return out_path
 
 
 def plot_speed_distribution(records):
-    speeds = [r["speed_mpm"] for r in records]
     by_bucket = defaultdict(list)
     for r in records:
         by_bucket[r["bucket_name"]].append(r["speed_mpm"])
 
-    panel_specs = []
-    x_positions = [20, 410, 800]
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5), dpi=180, sharey=True)
     for idx, name in enumerate(DISTANCE_BUCKETS):
-        panel_specs.append(
-            svg_hist_panel(
-                title=f"{name} Speed Distribution",
-                xlabel="Speed (m/min)",
-                values=by_bucket[name],
-                color=BUCKET_COLORS[name],
-                bins=30,
-                panel_x=x_positions[idx],
-                panel_y=20,
-                panel_w=380,
-                panel_h=520,
-                legend_items=[(f"{name} n={len(by_bucket[name])}", BUCKET_COLORS[name])],
-            )
+        axes[idx].hist(
+            by_bucket[name],
+            bins=60,
+            color=BUCKET_COLORS[name],
+            edgecolor="white",
+            alpha=0.9,
         )
-    out_path = OUTPUT_DIR / "speed_distribution.svg"
-    write_svg(out_path, 1200, 560, "\n".join(panel_specs))
+        axes[idx].set_title(f"{name} Speed (n={len(by_bucket[name])})")
+        axes[idx].set_xlabel("Speed (m/min)")
+        axes[idx].grid(alpha=0.2, linestyle="--")
+    axes[0].set_ylabel("Count")
+
+    fig.tight_layout()
+    out_path = OUTPUT_DIR / "speed_distribution.png"
+    fig.savefig(out_path, bbox_inches="tight")
+    plt.close(fig)
     return out_path
 
 

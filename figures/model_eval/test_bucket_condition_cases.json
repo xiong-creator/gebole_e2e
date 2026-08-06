@@ -1,0 +1,344 @@
+[
+  {
+    "case_type": "representative",
+    "ring_number": "2023-22-0230315",
+    "image_file_name": "2023-22-0230315_a.jpg",
+    "image_abs_path": "/home/xiongyajiao/gebole/CausalFSFG_TMM/data/E2E/eyes/20251119/蓝天傲翔赛鸽公棚2024年春决赛获奖鸽赏析/2023-22-0230315_a.jpg",
+    "race_name": "50空距收费站",
+    "distance_km": 50.0,
+    "gt_speed_mpm": 807.8182,
+    "actual_bucket": "short",
+    "predictions": [
+      {
+        "bucket": "short",
+        "bucket_idx": 0,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          1.4571,
+          1546.4905
+        ],
+        "predicted_pct": 0.5359417200088501,
+        "predicted_speed_mpm": 829.5049578671217,
+        "predicted_speed_kmh": 49.770297472027295
+      },
+      {
+        "bucket": "middle",
+        "bucket_idx": 1,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          539.5429,
+          3879.1267
+        ],
+        "predicted_pct": 0.1852673590183258,
+        "predicted_speed_mpm": 1158.2587708463848,
+        "predicted_speed_kmh": 69.49552625078309
+      },
+      {
+        "bucket": "long",
+        "bucket_idx": 2,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          408.1978,
+          2462.3511
+        ],
+        "predicted_pct": 0.3500096797943115,
+        "predicted_speed_mpm": 1127.1713387814284,
+        "predicted_speed_kmh": 67.63028032688571
+      }
+    ]
+  },
+  {
+    "case_type": "hard_case",
+    "ring_number": "2023-22-2022275",
+    "image_file_name": "2023-22-2022275_a.jpg",
+    "image_abs_path": "/home/xiongyajiao/gebole/CausalFSFG_TMM/data/E2E/eyes/20251119/蓝天傲翔赛鸽公棚2024年春决赛获奖鸽赏析/2023-22-2022275_a.jpg",
+    "race_name": "【棋盘关】排名赛",
+    "distance_km": 179.327,
+    "gt_speed_mpm": 1530.723,
+    "actual_bucket": "short",
+    "predictions": [
+      {
+        "bucket": "short",
+        "bucket_idx": 0,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          1.4571,
+          1546.4905
+        ],
+        "predicted_pct": 0.5065959692001343,
+        "predicted_speed_mpm": 784.1647927195787,
+        "predicted_speed_kmh": 47.04988756317472
+      },
+      {
+        "bucket": "middle",
+        "bucket_idx": 1,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          539.5429,
+          3879.1267
+        ],
+        "predicted_pct": 0.2029189020395279,
+        "predicted_speed_mpm": 1217.2075779649945,
+        "predicted_speed_kmh": 73.03245467789968
+      },
+      {
+        "bucket": "long",
+        "bucket_idx": 2,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          408.1978,
+          2462.3511
+        ],
+        "predicted_pct": 0.3587646484375,
+        "predicted_speed_mpm": 1145.1553865112305,
+        "predicted_speed_kmh": 68.70932319067384
+      }
+    ]
+  },
+  {
+    "case_type": "representative",
+    "ring_number": "2024-29-0118080",
+    "image_file_name": "2024-29-0118080_a.jpg",
+    "image_abs_path": "/home/xiongyajiao/gebole/CausalFSFG_TMM/data/E2E/eyes/20251118/2025年春季宁夏赛航赛鸽公棚500公里决赛获奖鸽照片/2024-29-0118080_a.jpg",
+    "race_name": "第三关500公里比赛",
+    "distance_km": 498.0,
+    "gt_speed_mpm": 1257.9201,
+    "actual_bucket": "middle",
+    "predictions": [
+      {
+        "bucket": "short",
+        "bucket_idx": 0,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          1.4571,
+          1546.4905
+        ],
+        "predicted_pct": 0.46039295196533203,
+        "predicted_speed_mpm": 712.7795879110336,
+        "predicted_speed_kmh": 42.76677527466201
+      },
+      {
+        "bucket": "middle",
+        "bucket_idx": 1,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          539.5429,
+          3879.1267
+        ],
+        "predicted_pct": 0.20214243233203888,
+        "predicted_speed_mpm": 1214.614492308673,
+        "predicted_speed_kmh": 72.8768695385204
+      },
+      {
+        "bucket": "long",
+        "bucket_idx": 2,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          408.1978,
+          2462.3511
+        ],
+        "predicted_pct": 0.4257391691207886,
+        "predicted_speed_mpm": 1282.7313191887258,
+        "predicted_speed_kmh": 76.96387915132355
+      }
+    ]
+  },
+  {
+    "case_type": "hard_case",
+    "ring_number": "2024-24-1559929",
+    "image_file_name": "2024-24-1559929_a.jpg",
+    "image_abs_path": "/home/xiongyajiao/gebole/CausalFSFG_TMM/data/E2E/eyes/20251118/云南宣威金亚信鸽养殖园2025年春季获奖鸽图片赏析/2024-24-1559929_a.jpg",
+    "race_name": "金亚（第九届）赛鸽400公里决赛",
+    "distance_km": 390.0,
+    "gt_speed_mpm": 694.5111,
+    "actual_bucket": "middle",
+    "predictions": [
+      {
+        "bucket": "short",
+        "bucket_idx": 0,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          1.4571,
+          1546.4905
+        ],
+        "predicted_pct": 0.046438202261924744,
+        "predicted_speed_mpm": 73.20567353062927,
+        "predicted_speed_kmh": 4.392340411837757
+      },
+      {
+        "bucket": "middle",
+        "bucket_idx": 1,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          539.5429,
+          3879.1267
+        ],
+        "predicted_pct": 0.2592729926109314,
+        "predicted_speed_mpm": 1405.406785900986,
+        "predicted_speed_kmh": 84.32440715405917
+      },
+      {
+        "bucket": "long",
+        "bucket_idx": 2,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          408.1978,
+          2462.3511
+        ],
+        "predicted_pct": 0.3319431245326996,
+        "predicted_speed_mpm": 1090.0598646711558,
+        "predicted_speed_kmh": 65.40359188026935
+      }
+    ]
+  },
+  {
+    "case_type": "representative",
+    "ring_number": "2024-03-0851497",
+    "image_file_name": "2024-03-0851497_a.jpg",
+    "image_abs_path": "/home/xiongyajiao/gebole/CausalFSFG_TMM/data/E2E/eyes/20251119/天津宇翔：2024年决赛获奖鸽照片赏析/2024-03-0851497_a.jpg",
+    "race_name": "500公里决赛",
+    "distance_km": 527.57,
+    "gt_speed_mpm": 1153.4882,
+    "actual_bucket": "long",
+    "predictions": [
+      {
+        "bucket": "short",
+        "bucket_idx": 0,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          1.4571,
+          1546.4905
+        ],
+        "predicted_pct": 0.5521721839904785,
+        "predicted_speed_mpm": 854.5815668162346,
+        "predicted_speed_kmh": 51.27489400897408
+      },
+      {
+        "bucket": "middle",
+        "bucket_idx": 1,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          539.5429,
+          3879.1267
+        ],
+        "predicted_pct": 0.143898606300354,
+        "predicted_speed_mpm": 1020.1043544432403,
+        "predicted_speed_kmh": 61.20626126659442
+      },
+      {
+        "bucket": "long",
+        "bucket_idx": 2,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          408.1978,
+          2462.3511
+        ],
+        "predicted_pct": 0.36258310079574585,
+        "predicted_speed_mpm": 1152.999073023814,
+        "predicted_speed_kmh": 69.17994438142884
+      }
+    ]
+  },
+  {
+    "case_type": "hard_case",
+    "ring_number": "2024-04-0448732",
+    "image_file_name": "2024-04-0448732_a.jpg",
+    "image_abs_path": "/home/xiongyajiao/gebole/CausalFSFG_TMM/data/E2E/eyes/20251120/陕西鸿晟牧业第三届加站赛冠军-80名获奖鸽照片/2024-04-0448732_a.jpg",
+    "race_name": "（春棚）加站赛",
+    "distance_km": 519.0,
+    "gt_speed_mpm": 417.0673,
+    "actual_bucket": "long",
+    "predictions": [
+      {
+        "bucket": "short",
+        "bucket_idx": 0,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          1.4571,
+          1546.4905
+        ],
+        "predicted_pct": 0.04981468990445137,
+        "predicted_speed_mpm": 78.42245971302017,
+        "predicted_speed_kmh": 4.705347582781211
+      },
+      {
+        "bucket": "middle",
+        "bucket_idx": 1,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          539.5429,
+          3879.1267
+        ],
+        "predicted_pct": 0.060428693890571594,
+        "predicted_speed_mpm": 741.3495871721119,
+        "predicted_speed_kmh": 44.48097523032671
+      },
+      {
+        "bucket": "long",
+        "bucket_idx": 2,
+        "distance_boundaries_km": [
+          300.0,
+          500.0
+        ],
+        "speed_range_mpm": [
+          408.1978,
+          2462.3511
+        ],
+        "predicted_pct": 0.028011569753289223,
+        "predicted_speed_mpm": 465.7378584468992,
+        "predicted_speed_kmh": 27.944271506813955
+      }
+    ]
+  }
+]

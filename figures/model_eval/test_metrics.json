@@ -1,0 +1,60 @@
+{
+  "eval_split": "test",
+  "checkpoint": "/home/xiongyajiao/gebole/CausalFSFG_TMM/e2e/runs/run_20260806_024333/best.pth",
+  "metrics": {
+    "overall": {
+      "count": 1043,
+      "mae_mpm": 127.71868316446911,
+      "rmse_mpm": 188.15674135992214,
+      "mape": 0.16740672017377214,
+      "r2": 0.6570595520619161,
+      "acc_within_50mpm": 0.34707574304889743,
+      "acc_within_100mpm": 0.5695110258868649,
+      "acc_within_200mpm": 0.7871524448705657
+    },
+    "per_bucket": {
+      "short": {
+        "count": 32,
+        "mae_mpm": 243.17081125051652,
+        "rmse_mpm": 343.04669148841685,
+        "mape": 1.0293380561274943,
+        "r2": 0.03809447852766812,
+        "acc_within_50mpm": 0.28125,
+        "acc_within_100mpm": 0.40625,
+        "acc_within_200mpm": 0.59375
+      },
+      "middle": {
+        "count": 433,
+        "mae_mpm": 148.4103277283979,
+        "rmse_mpm": 202.57194722562258,
+        "mape": 0.1516689859917828,
+        "r2": 0.6208260436075576,
+        "acc_within_50mpm": 0.279445727482679,
+        "acc_within_100mpm": 0.45265588914549654,
+        "acc_within_200mpm": 0.7251732101616628
+      },
+      "long": {
+        "count": 578,
+        "mae_mpm": 105.82603576838837,
+        "rmse_mpm": 163.18185671159142,
+        "mape": 0.131477024932046,
+        "r2": 0.696158535847437,
+        "acc_within_50mpm": 0.4013840830449827,
+        "acc_within_100mpm": 0.6660899653979239,
+        "acc_within_200mpm": 0.8442906574394463
+      }
+    }
+  },
+  "val_test_bucket_coverage": {
+    "val": {
+      "short": 46,
+      "middle": 445,
+      "long": 552
+    },
+    "test": {
+      "short": 32,
+      "middle": 433,
+      "long": 578
+    }
+  }
+}
