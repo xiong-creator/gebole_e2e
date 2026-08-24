@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 from build_index import IMG_EXTS, basename_variants, candidate_rel_paths, norm_rel_path
-from config import IMAGE_ROOT, JSONL_PATH
+from config import IMAGE_ROOT, JSONL_PATH, JSONL_PATHS
 
 
 def build_allowed_sets(jsonl_path: Path):
@@ -34,6 +34,19 @@ def build_allowed_sets(jsonl_path: Path):
     return allowed_rel, allowed_names
 
 
+def get_jsonl_paths() -> list[Path]:
+    paths = []
+    seen = set()
+    configured = JSONL_PATHS if "JSONL_PATHS" in globals() else [JSONL_PATH]
+    for path in configured:
+        p = Path(path)
+        if p in seen:
+            continue
+        seen.add(p)
+        paths.append(p)
+    return paths
+
+
 def find_unused_images(image_root: Path, allowed_rel: set[str], allowed_names: set[str]):
     unused = []
     kept = 0
@@ -56,10 +69,18 @@ def main():
     ap.add_argument("--limit", type=int, default=100, help="最多预览多少条待删除路径")
     args = ap.parse_args()
 
-    print(f"[clean] JSONL: {JSONL_PATH}")
+    jsonl_paths = get_jsonl_paths()
+    print("[clean] JSONLs:")
+    for path in jsonl_paths:
+        print(f"  - {path}")
     print(f"[clean] IMAGE_ROOT: {IMAGE_ROOT}")
 
-    allowed_rel, allowed_names = build_allowed_sets(JSONL_PATH)
+    allowed_rel = set()
+    allowed_names = set()
+    for path in jsonl_paths:
+        rels, names = build_allowed_sets(path)
+        allowed_rel.update(rels)
+        allowed_names.update(names)
     print(
         f"[clean] allowed relative paths={len(allowed_rel)} "
         f"allowed names={len(allowed_names)}"

@@ -1,4 +1,5 @@
 """Visualize current E2E dataset distance/speed distributions."""
+import argparse
 import json
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -14,10 +15,17 @@ from config import DISTANCE_BOUNDARIES, DISTANCE_BUCKETS, INDEX_DIR
 
 OUTPUT_DIR = Path(__file__).resolve().parent / "figures"
 INDEX_FILES = ["train.jsonl", "val.jsonl", "test.jsonl"]
+_BUCKET_COLOR_CYCLE = [
+    "#4C78A8",
+    "#F58518",
+    "#54A24B",
+    "#E45756",
+    "#72B7B2",
+    "#B279A2",
+]
 BUCKET_COLORS = {
-    "short": "#4C78A8",
-    "middle": "#F58518",
-    "long": "#54A24B",
+    name: _BUCKET_COLOR_CYCLE[idx % len(_BUCKET_COLOR_CYCLE)]
+    for idx, name in enumerate(DISTANCE_BUCKETS)
 }
 
 
@@ -33,11 +41,24 @@ def quantile(sorted_values, q):
     return sorted_values[lo] * (1 - frac) + sorted_values[hi] * frac
 
 
-def load_records():
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--index-dir", type=Path, default=INDEX_DIR)
+    parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
+    parser.add_argument(
+        "--index-files",
+        nargs="+",
+        default=INDEX_FILES,
+        help="Relative names under --index-dir, e.g. train.jsonl val.jsonl test.jsonl",
+    )
+    return parser.parse_args()
+
+
+def load_records(index_dir: Path, index_files: list[str]):
     records = []
     split_counts = Counter()
-    for name in INDEX_FILES:
-        path = INDEX_DIR / name
+    for name in index_files:
+        path = index_dir / name
         with open(path, "r", encoding="utf-8") as f:
             for line in f:
                 row = json.loads(line)
@@ -96,7 +117,7 @@ def add_bucket_lines(ax):
         ax.axvline(boundary, color="#D62728", linestyle="--", linewidth=1.5, alpha=0.9)
 
 
-def plot_distance_distribution(records):
+def plot_distance_distribution(records, output_dir: Path):
     distances = [r["distance_km"] for r in records]
     distances_sorted = sorted(distances)
     distance_p99 = quantile(distances_sorted, 0.99)
@@ -149,47 +170,104 @@ def plot_distance_distribution(records):
     inset.grid(alpha=0.15, linestyle="--")
 
     fig.tight_layout()
-    out_path = OUTPUT_DIR / "distance_distribution.png"
+    out_path = output_dir / "distance_distribution.png"
     fig.savefig(out_path, bbox_inches="tight")
     plt.close(fig)
     return out_path
 
 
-def plot_speed_distribution(records):
+def plot_speed_distribution(records, output_dir: Path):
     by_bucket = defaultdict(list)
     for r in records:
         by_bucket[r["bucket_name"]].append(r["speed_mpm"])
 
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5), dpi=180, sharey=True)
+    n_buckets = len(DISTANCE_BUCKETS)
+    fig, axes = plt.subplots(2, n_buckets, figsize=(5.0 * n_buckets, 9), dpi=180)
+    if n_buckets == 1:
+        axes = [[axes[0]], [axes[1]]]
     for idx, name in enumerate(DISTANCE_BUCKETS):
-        axes[idx].hist(
-            by_bucket[name],
+        speeds = sorted(float(v) for v in by_bucket[name])
+        if not speeds:
+            continue
+
+        p01 = quantile(speeds, 0.01)
+        p99 = quantile(speeds, 0.99)
+        clipped = [v for v in speeds if p01 <= v <= p99]
+        low_clip_count = sum(v < p01 for v in speeds)
+        high_clip_count = sum(v > p99 for v in speeds)
+        min_v = speeds[0]
+        max_v = speeds[-1]
+
+        ax_full = axes[0, idx]
+        ax_focus = axes[1, idx]
+
+        ax_full.hist(
+            clipped,
             bins=60,
             color=BUCKET_COLORS[name],
             edgecolor="white",
             alpha=0.9,
         )
-        axes[idx].set_title(f"{name} Speed (n={len(by_bucket[name])})")
-        axes[idx].set_xlabel("Speed (m/min)")
-        axes[idx].grid(alpha=0.2, linestyle="--")
-    axes[0].set_ylabel("Count")
+        ax_full.set_title(
+            f"{name} Speed Main Range\n"
+            f"n={len(speeds)} | clip<={low_clip_count} clip>={high_clip_count}"
+        )
+        ax_full.set_xlabel("Speed (m/min)")
+        ax_full.set_ylabel("Count")
+        ax_full.grid(alpha=0.2, linestyle="--")
+        ax_full.text(
+            0.98,
+            0.95,
+            f"raw min={min_v:.1f}\nraw max={max_v:.1f}\np01={p01:.1f}\np99={p99:.1f}",
+            transform=ax_full.transAxes,
+            ha="right",
+            va="top",
+            fontsize=9,
+            bbox={"boxstyle": "round", "facecolor": "#F7F7F7", "edgecolor": "#CCCCCC"},
+        )
+
+        focus_lo = max(min_v, quantile(speeds, 0.10))
+        focus_hi = min(max_v, quantile(speeds, 0.90))
+        focus = [v for v in speeds if focus_lo <= v <= focus_hi]
+        if not focus:
+            focus = clipped
+
+        ax_focus.hist(
+            focus,
+            bins=60,
+            color=BUCKET_COLORS[name],
+            edgecolor="white",
+            alpha=0.9,
+        )
+        ax_focus.set_title(
+            f"{name} Speed Focus\n"
+            f"p10={focus_lo:.1f} to p90={focus_hi:.1f}"
+        )
+        ax_focus.set_xlabel("Speed (m/min)")
+        ax_focus.set_ylabel("Count")
+        ax_focus.grid(alpha=0.2, linestyle="--")
 
     fig.tight_layout()
-    out_path = OUTPUT_DIR / "speed_distribution.png"
+    out_path = output_dir / "speed_distribution.png"
     fig.savefig(out_path, bbox_inches="tight")
     plt.close(fig)
     return out_path
 
 
 def main():
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    records, split_counts = load_records()
+    args = parse_args()
+    output_dir = args.output_dir.resolve()
+    index_dir = args.index_dir.resolve()
+    output_dir.mkdir(parents=True, exist_ok=True)
+    records, split_counts = load_records(index_dir, args.index_files)
     summary = build_summary(records, split_counts)
 
-    distance_path = plot_distance_distribution(records)
-    speed_path = plot_speed_distribution(records)
+    distance_path = plot_distance_distribution(records, output_dir)
+    speed_path = plot_speed_distribution(records, output_dir)
 
-    summary_path = OUTPUT_DIR / "distribution_summary.json"
+    summary["index_dir"] = str(index_dir)
+    summary["index_files"] = args.index_files
+    summary_path = output_dir / "distribution_summary.json"
     with open(summary_path, "w", encoding="utf-8") as f:
         json.dump(summary, f, ensure_ascii=False, indent=2)
 

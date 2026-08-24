@@ -17,6 +17,7 @@ from typing import Iterable
 from tqdm import tqdm
 
 from config import (
+    JSONL_PATHS,
     JSONL_PATH,
     IMAGE_ROOT,
     INDEX_DIR,
@@ -28,6 +29,11 @@ from config import (
     SPEED_QUANTILE_HIGH,
     SPEED_RANGE_EXPAND_LOW,
     SPEED_RANGE_EXPAND_HIGH,
+    SPEED_FILTER_ENABLED,
+    SPEED_FILTER_QUANTILE_LOW,
+    SPEED_FILTER_QUANTILE_HIGH,
+    SPEED_FILTER_EXPAND_LOW,
+    SPEED_FILTER_EXPAND_HIGH,
     SEED,
     VAL_RATIO,
     TEST_RATIO,
@@ -193,6 +199,29 @@ def iter_valid_records(jsonl_path: Path, image_index: dict, rel_index: dict):
     )
 
 
+def get_jsonl_paths() -> list[Path]:
+    paths = []
+    seen = set()
+    configured = JSONL_PATHS if "JSONL_PATHS" in globals() else [JSONL_PATH]
+    for path in configured:
+        p = Path(path)
+        if p in seen:
+            continue
+        seen.add(p)
+        paths.append(p)
+    return paths
+
+
+def load_records_from_jsonls(jsonl_paths: list[Path], image_index: dict, rel_index: dict):
+    all_records = []
+    for jsonl_path in jsonl_paths:
+        print(f"[build_index] scanning JSONL: {jsonl_path}")
+        file_records = list(iter_valid_records(jsonl_path, image_index, rel_index))
+        print(f"[build_index] valid records from {jsonl_path.name}: {len(file_records)}")
+        all_records.extend(file_records)
+    return all_records
+
+
 def quantile_value(sorted_values, q: float) -> float:
     if not sorted_values:
         raise ValueError("sorted_values 不能为空")
@@ -235,9 +264,8 @@ def compute_speed_range(records):
         low_q = quantile_value(speeds_sorted, SPEED_QUANTILE_LOW)
         high_q = quantile_value(speeds_sorted, SPEED_QUANTILE_HIGH)
         observed_positive_min = positive_speeds[0]
-        observed_max = speeds_sorted[-1]
         low = max(low_q - SPEED_RANGE_EXPAND_LOW, observed_positive_min)
-        high = max(high_q + SPEED_RANGE_EXPAND_HIGH, observed_max)
+        high = high_q + SPEED_RANGE_EXPAND_HIGH
         n = len(speeds_sorted)
         speed_range[name] = {
             "low": float(low),
@@ -247,9 +275,95 @@ def compute_speed_range(records):
             "low_quantile": float(low_q),
             "high_quantile": float(high_q),
             "observed_positive_min": float(observed_positive_min),
-            "observed_max": float(observed_max),
+            "observed_max": float(speeds_sorted[-1]),
         }
     return speed_range
+
+
+def compute_speed_filter_bounds(records):
+    per_bucket = {i: [] for i in range(len(DISTANCE_BUCKETS))}
+    for r in records:
+        per_bucket[r["bucket_idx"]].append(float(r["speed_mpm"]))
+
+    bounds = {}
+    for idx, speeds in per_bucket.items():
+        name = DISTANCE_BUCKETS[idx]
+        if not speeds:
+            bounds[idx] = None
+            continue
+        speeds_sorted = sorted(speeds)
+        low_q = quantile_value(speeds_sorted, SPEED_FILTER_QUANTILE_LOW)
+        high_q = quantile_value(speeds_sorted, SPEED_FILTER_QUANTILE_HIGH)
+        low = max(0.0, low_q - SPEED_FILTER_EXPAND_LOW)
+        high = high_q + SPEED_FILTER_EXPAND_HIGH
+        bounds[idx] = {
+            "bucket_name": name,
+            "low": float(low),
+            "high": float(high),
+            "count": len(speeds_sorted),
+            "low_quantile": float(low_q),
+            "high_quantile": float(high_q),
+            "observed_min": float(speeds_sorted[0]),
+            "observed_max": float(speeds_sorted[-1]),
+        }
+    return bounds
+
+
+def filter_records_by_speed_bounds(records):
+    bounds = compute_speed_filter_bounds(records)
+    kept = []
+    removed = []
+    per_bucket_stats = {}
+    for idx, name in enumerate(DISTANCE_BUCKETS):
+        per_bucket_stats[name] = {
+            "before": 0,
+            "after": 0,
+            "removed": 0,
+            "low": None,
+            "high": None,
+        }
+        if bounds[idx] is not None:
+            per_bucket_stats[name]["low"] = bounds[idx]["low"]
+            per_bucket_stats[name]["high"] = bounds[idx]["high"]
+
+    for r in records:
+        bucket_idx = r["bucket_idx"]
+        speed = float(r["speed_mpm"])
+        name = DISTANCE_BUCKETS[bucket_idx]
+        per_bucket_stats[name]["before"] += 1
+        bound = bounds[bucket_idx]
+        if bound is None:
+            kept.append(r)
+            per_bucket_stats[name]["after"] += 1
+            continue
+        if bound["low"] <= speed <= bound["high"]:
+            kept.append(r)
+            per_bucket_stats[name]["after"] += 1
+        else:
+            removed.append(r)
+            per_bucket_stats[name]["removed"] += 1
+
+    print("[build_index] speed outlier filter:")
+    print(
+        f"  enabled={SPEED_FILTER_ENABLED} "
+        f"q_low={SPEED_FILTER_QUANTILE_LOW} q_high={SPEED_FILTER_QUANTILE_HIGH} "
+        f"expand_low={SPEED_FILTER_EXPAND_LOW} expand_high={SPEED_FILTER_EXPAND_HIGH}"
+    )
+    for name in DISTANCE_BUCKETS:
+        stat = per_bucket_stats[name]
+        print(
+            f"  {name}: before={stat['before']} after={stat['after']} removed={stat['removed']} "
+            f"keep_range=[{stat['low']}, {stat['high']}]"
+        )
+    if removed:
+        print("[build_index] removed outlier examples:")
+        for r in removed[:10]:
+            print(
+                f"  ring={r['ring_number']} bucket={DISTANCE_BUCKETS[r['bucket_idx']]} "
+                f"dist={r['distance_km']:.1f} speed={r['speed_mpm']:.4f} "
+                f"img={r['image_file_name']}"
+            )
+    return kept
 
 
 def split_by_ring(records, seed=SEED, val_ratio=VAL_RATIO, test_ratio=TEST_RATIO):
@@ -308,7 +422,10 @@ def print_samples(records, k: int = 5):
 
 
 def main():
-    print(f"[build_index] JSONL: {JSONL_PATH}")
+    jsonl_paths = get_jsonl_paths()
+    print("[build_index] JSONLs:")
+    for path in jsonl_paths:
+        print(f"  - {path}")
     print(f"[build_index] IMAGE_ROOT: {IMAGE_ROOT}")
 
     image_index, rel_index = scan_image_root(IMAGE_ROOT)
@@ -319,11 +436,19 @@ def main():
         )
         return
 
-    records = list(iter_valid_records(JSONL_PATH, image_index, rel_index))
+    records = load_records_from_jsonls(jsonl_paths, image_index, rel_index)
     print(f"[build_index] valid records: {len(records)}")
     if len(records) == 0:
         print("[error] 没有匹配到任何图片。请检查 IMAGE_ROOT 与 JSONL 的路径/文件名是否一致。")
         return
+
+    records = assign_bucket_indices(records, list(DISTANCE_BOUNDARIES))
+    if SPEED_FILTER_ENABLED:
+        records = filter_records_by_speed_bounds(records)
+        print(f"[build_index] valid records after speed filter: {len(records)}")
+        if len(records) == 0:
+            print("[error] 速度过滤后没有可用样本，请放宽过滤阈值。")
+            return
 
     splits = split_by_ring(records)
     boundaries = list(DISTANCE_BOUNDARIES)

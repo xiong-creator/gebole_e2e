@@ -19,13 +19,20 @@ from model import EyeSpeedNet
 
 
 EVAL_SPLIT = "test"
-RUN_DIR = Path("/home/xiongyajiao/gebole/CausalFSFG_TMM/e2e/runs/run_20260806_024333")
+RUN_DIR = Path("/home/xiongyajiao/gebole/CausalFSFG_TMM/e2e/runs/run_20260824_074343")
 CKPT_PATH = RUN_DIR / "best.pth"
-OUTPUT_DIR = Path(__file__).resolve().parent / "figures" / "model_eval"
+OUTPUT_DIR = Path(__file__).resolve().parent / "figures" / "model_eval_new"
+_BUCKET_COLOR_CYCLE = [
+    "#4C78A8",
+    "#F58518",
+    "#54A24B",
+    "#E45756",
+    "#72B7B2",
+    "#B279A2",
+]
 BUCKET_COLORS = {
-    "short": "#4C78A8",
-    "middle": "#F58518",
-    "long": "#54A24B",
+    name: _BUCKET_COLOR_CYCLE[idx % len(_BUCKET_COLOR_CYCLE)]
+    for idx, name in enumerate(DISTANCE_BUCKETS)
 }
 ERROR_THRESHOLDS = [50.0, 100.0, 200.0]
 BATCH_SIZE = 8

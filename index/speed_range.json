@@ -1,32 +1,52 @@
 {
-  "short": {
-    "low": 1.4571,
-    "high": 1546.4905,
-    "count": 658,
-    "median": 742.373,
-    "low_quantile": 5.139,
-    "high_quantile": 1153.2388,
-    "observed_positive_min": 1.4571,
-    "observed_max": 1546.4905
+  "lt200": {
+    "low": 21.5672,
+    "high": 1333.3208,
+    "count": 48102,
+    "median": 371.9777,
+    "low_quantile": 27.1003,
+    "high_quantile": 1313.3208,
+    "observed_positive_min": 21.5672,
+    "observed_max": 1384.6154
   },
-  "middle": {
-    "low": 539.5429,
-    "high": 3879.1267,
-    "count": 7900,
-    "median": 1232.2377,
-    "low_quantile": 559.5429,
-    "high_quantile": 1768.0943,
-    "observed_positive_min": 300.484,
-    "observed_max": 3879.1267
+  "200_300": {
+    "low": 362.7664,
+    "high": 1451.2977,
+    "count": 600,
+    "median": 891.521,
+    "low_quantile": 382.7664,
+    "high_quantile": 1431.2977,
+    "observed_positive_min": 332.6805,
+    "observed_max": 1461.9883
   },
-  "long": {
-    "low": 408.1978,
-    "high": 2462.3511,
-    "count": 10216,
-    "median": 1154.5646,
-    "low_quantile": 428.1978,
-    "high_quantile": 1692.1707,
-    "observed_positive_min": 218.8546,
-    "observed_max": 2462.3511
+  "300_400": {
+    "low": 599.1152,
+    "high": 1797.8347,
+    "count": 1782,
+    "median": 1522.8985,
+    "low_quantile": 619.1152,
+    "high_quantile": 1777.8347,
+    "observed_positive_min": 598.0208,
+    "observed_max": 1826.0264
+  },
+  "400_500": {
+    "low": 554.5193,
+    "high": 1653.2866,
+    "count": 6535,
+    "median": 1086.4117,
+    "low_quantile": 563.3782,
+    "high_quantile": 1633.2866,
+    "observed_positive_min": 554.5193,
+    "observed_max": 1663.7139
+  },
+  "ge500": {
+    "low": 450.6046,
+    "high": 1691.0884,
+    "count": 10079,
+    "median": 1154.809,
+    "low_quantile": 470.6046,
+    "high_quantile": 1671.0884,
+    "observed_positive_min": 428.1978,
+    "observed_max": 1698.1166
   }
 }

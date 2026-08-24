@@ -126,7 +126,7 @@ def main():
     ap.add_argument("--backbone", type=str, default=BACKBONE,
                     help="需要与训练时保持一致")
     ap.add_argument("--all-buckets", action="store_true",
-                    help="忽略输入距离，直接输出 short/middle/long 三个桶下的预测")
+                    help="忽略输入距离，直接输出所有距离桶下的预测")
     ap.add_argument("--json", action="store_true", help="以 JSON 形式输出")
     args = ap.parse_args()
 
